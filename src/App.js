@@ -1,25 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import {
+  Box,
+  Container,
+  createTheme,
+  Stack,
+  ThemeProvider,
+} from '@mui/material'
+import { useState } from 'react'
+import Add from './components/Add'
+import Feed from './components/Feed'
+import Navbar from './components/Navbar'
+import Rightbar from './components/Rightbar'
+import Sidebar from './components/Sidebar'
 
 function App() {
+  const [myMode, setmyMode] = useState('light')
+  const theme = createTheme({
+    palette: {
+      mode: myMode,
+    },
+  })
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <ThemeProvider theme={theme}>
+      <Box bgcolor={'background.default'} color={'text.primary'}>
+        <Navbar />
+        <Stack direction='row' justifyContent='space-between' spacing={2}>
+          <Sidebar myMode={myMode} setmyMode={setmyMode} />
+          <Feed />
+          <Rightbar />
+        </Stack>
+        <Add />
+      </Box>
+    </ThemeProvider>
+  )
 }
 
-export default App;
+export default App
